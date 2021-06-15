@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include "affichage.h"
 #include "recherche.h"
+#include "patterns.h"
 
 int main(int argc, char** argv)
 {
