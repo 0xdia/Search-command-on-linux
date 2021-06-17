@@ -9,8 +9,12 @@ int main(int argc, char** argv)
 
     nettoyer_nom(argv[1]);
 
-    if (! go(argv[1], argv[2])) {
+    if (! go(argv[1], argv[2])) 
         return 0;
+
+    if (correspondre(argv[1], 0, argv[2], 0))
+        puts("Yes !");
+    else puts("No !");
 
     return 0;
 }

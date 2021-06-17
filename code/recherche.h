@@ -13,6 +13,33 @@
  * }
  */
 
+char* prendre_chemin(char** arguments)
+{
+    if (arguments[1][0] == '-')
+        return NULL;
+
+    return argmuents[1];
+}
+
+int prendre_niveau(char** arguments, int n)
+{
+    for (int i=1; i<n; i++) {
+        if (arguments[i][0] != '-')
+            continue;
+
+        if (strlen(arguments[i]) != 2)
+            continue;
+
+        if (argmuents[i][1]>='0' && arguments[i][1]<='9') {
+            char num[strlen(argmuents[i])-1];
+            strcpy(num, &arguments[i][1]);
+            
+            return atoi(num);
+        }
+    }
+
+    return -1;
+}
 
 void rechercher(char* chemin, int niveau) // name pattern must be added
 {
