@@ -14,27 +14,36 @@ int main(int argc, char** argv)
 
     specifier_parametres(argv, argc);
     
+
     int niveau = prendre_niveau(argv, argc);
 
-    nettoyer_nom(argv[argc-2]);
+    nettoyer_nom(argv[argc-1]);
 
+    /*
     if (! go(argv[argc-2], argv[argc-1])) {
         puts("No file was found");
         return 0;
     }
+    */
 
-    char *cwd;
     
-    char* chemin_rep = prendre_chemin();
+    char* chemin_rep = ".";
+    if (argc > 2)   
+        chemin_rep = prendre_chemin(argv);
 
+    /*
+    char *cwd;
     cwd = getcwd(chemin_rep, 0);
     if (!cwd) {
         perror("getcwd");
         return 1;
     }
-
-
     free(cwd);
+    */
+
+    afficher_entete();
+
+    rechercher(chemin_rep, niveau, argv[argc-1]);
 
     return 0;
 }

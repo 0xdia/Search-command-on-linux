@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 
-
 void nettoyer_nom(char* pattern)
 {
     if (strlen(pattern) == 1)
@@ -40,7 +39,6 @@ int correspondre(char* p, int cur_p, char* b, int cur_b)
     // printf("[***]: %s x %s\n", &p[cur_p], &b[cur_b]);
     
     if (strcmp(&p[cur_p], &b[cur_b]) == 0) {
-        puts("Done");
         return 1;
     }
 

@@ -60,47 +60,48 @@ void print_taille(struct stat *s)
     printf("%ld ", s->st_size);
 }
 
-void print_all(struct stat *s)
+void print_all(struct stat *s, char* nom_fichier)
 {
     print_protection(s);
+    printf("   ");
     print_taille(s);
+    printf("   ");
     print_type(s);
+    printf("   ");
     print_dernier_acces(s);
+    printf("   ");
     print_derniere_modif(s);
-    puts("");
+    printf("   %s\n", nom_fichier);
 }
 
 
 void afficher_entete()
 {
     if (ALL) {
-        printf("Protection  Taille  Type  Dernier acces  Dernière modification  Date de création\n");  
+        printf("Protection    Taille    Type    Dernier acces    Dernière modification    Date de création   ");  
     }
     else {
         if (PROTECTION)
-            printf("Protection ");
+            printf("Protection   ");
         if (TAILLE)
-            printf("Taille ");
+            printf("Taille   ");
         if (TYPE)
-            printf("Type ");
+            printf("Type   ");
         if (DATE_DERNIER_ACCES)
-            printf("Dernier acces ");
+            printf("Dernier acces   ");
         if (DATE_DERNIERE_MODIF)
-            printf("Dernier modification ");
+            printf("Dernier modification   ");
         if (DATE_CREATION)
             printf("Date de création");
-
-        puts("");
     }
+    printf("Nom du fichier\n");
 }
 
 
-void afficher(struct stat *s)
+void afficher(struct stat *s, char* nom_fichier)
 {
-    afficher_entete();
-
     if (ALL) {
-        print_all(s);
+        print_all(s, nom_fichier);
     }
     else {
         if (PROTECTION)
