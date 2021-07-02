@@ -15,6 +15,8 @@
  * }
  */
 
+int entete_deja_affiche = 0;
+
 char* prendre_chemin(char** arguments)
 {
     if (arguments[1][0] == '-')
@@ -49,6 +51,8 @@ void rechercher(char* chemin, int niveau, char* patrn) // name pattern must be a
     struct dirent *entry;
     
     rep = opendir(chemin);
+    if (!rep)
+        return;
 
     errno = 0;
     while ((entry = readdir(rep)) != NULL) {
@@ -58,6 +62,12 @@ void rechercher(char* chemin, int niveau, char* patrn) // name pattern must be a
         struct stat s;
 
         if (correspondre(patrn, 0, entry->d_name, 0)) {
+            // tester si l'entete est affiché ou pas
+            if (entete_deja_affiche == 0) {
+                afficher_entete();
+                entete_deja_affiche = 1;
+            }
+
             char nom_fichier[strlen(chemin) + strlen(entry->d_name)+1];
             strcpy(nom_fichier, chemin);
             strcat(nom_fichier, entry->d_name);

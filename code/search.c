@@ -41,9 +41,9 @@ int main(int argc, char** argv)
     free(cwd);
     */
 
-    afficher_entete();
-
     rechercher(chemin_rep, niveau, argv[argc-1]);
+    if (! entete_deja_affiche)
+        puts("Aucun fichier n'est trouvé");
 
     return 0;
 }

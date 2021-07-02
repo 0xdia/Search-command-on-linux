@@ -4,6 +4,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <time.h>
 
 short DATE_CREATION       = 0;
 short DATE_DERNIER_ACCES  = 0;
@@ -16,61 +17,104 @@ short ALL                 = 0;
 
 void print_protection(struct stat *s)
 {
-    // re-write this function later
-    printf("%3o      ", s->st_mode&0777);
+    static const char *rwx[] = {"---", "--x", "-w-", "-wx",
+    "r--", "r-x", "rw-", "rwx"};
+    static char bits[10];
+
+    int mode = s->st_mode;
+    strcpy(&bits[0], rwx[(mode >> 6)& 7]);
+    strcpy(&bits[3], rwx[(mode >> 3)& 7]);
+    strcpy(&bits[6], rwx[(mode & 7)]);
+ 
+    if (mode & S_ISUID)
+        bits[2] = (mode & S_IXUSR) ? 's' : 'S';
+    if (mode & S_ISGID)
+        bits[5] = (mode & S_IXGRP) ? 's' : 'l';
+    if (mode & S_ISVTX)
+        bits[8] = (mode & S_IXOTH) ? 't' : 'T';
+    bits[9] = '\0';
+
+    printf("%s ", bits);
+    // printf("%3o      ", s->st_mode&0777);
 }
 
 void print_type(struct stat *s) // Search for name conventions in french in the course
 {
     mode_t t = s->st_mode;
     if (S_ISREG(t))
-        printf("Fichier régulier ");
-    if (S_ISFIFO(t))
-        printf("Fichier spécial ");
-    if (S_ISCHR(t))
-        printf("Périph mode caractère ");
-    if (S_ISBLK(t))
-        printf("Périph mode bloc ");
-    if (S_ISDIR(t))
+        printf("Fichier_régulier ");
+    else if (S_ISFIFO(t))
+        printf("Fichier_spécial ");
+    else if (S_ISCHR(t))
+        printf("Périph_mode_caractère ");
+    else if (S_ISBLK(t))
+        printf("Périph_mode_bloc ");
+    else if (S_ISDIR(t))
         printf("Répertoire ");
-    if (S_ISLNK(t))
-        printf("Lien symbolique ");
-    if (S_ISSOCK(t))
+    else if (S_ISLNK(t))
+        printf("Lien_symbolique ");
+    else if (S_ISSOCK(t))
         printf("Socket ");
+    else
+        printf("Inconnu ");
 }
 
 void print_dernier_acces(struct stat *s)
 {
-    printf("%ld ", s->st_atime); 
+    char time[50];
+    strftime(time, 50, "%Y-%m-%d %H:%M:%S", localtime(&s->st_atime));
+    printf("%s   ", time);
 }
 
 void print_derniere_modif(struct stat *s)
 {
-    printf("%ld ", s->st_mtime);
+    char time[50];
+    strftime(time, 50, "%Y-%m-%d %H:%M:%S", localtime(&s->st_mtime));
+    printf("%s   ", time);
 }
 
 void print_date_creation(struct stat *s)
 {
-    // how to obtain this ?
-    printf("Birth date");
+    char time[50];
+    strftime(time, 50, "%Y-%m-%d %H:%M:%S", localtime(&s->st_ctime));
+    printf("%s   ", time);
 }
 
 void print_taille(struct stat *s)
 {
-    printf("%ld ", s->st_size);
+    double taille = (double) s->st_size;
+    if (taille < 1000) {
+        printf("%.1lf B ", taille);
+        return;
+    }
+    taille /= 1000;
+    if (taille < 1000) {
+        printf("%.1lf kB ", taille);
+        return;
+    }
+    taille /= 1000;
+    if (taille < 1000) {
+        printf("%.1lf MB ", taille);
+        return;
+    }
+    taille /= 1000;
+    printf("%.1lf GB ", taille);
 }
 
 void print_all(struct stat *s, char* nom_fichier)
 {
     print_protection(s);
-    printf("   ");
+    printf("  ");
     print_taille(s);
-    printf("   ");
+    printf(" ");
     print_type(s);
-    printf("   ");
+    printf("      ");
     print_dernier_acces(s);
-    printf("   ");
+    printf("      ");
     print_derniere_modif(s);
+    printf("      ");
+    print_date_creation(s);
+    printf("   ");
     printf("   %s\n", nom_fichier);
 }
 
@@ -78,11 +122,11 @@ void print_all(struct stat *s, char* nom_fichier)
 void afficher_entete()
 {
     if (ALL) {
-        printf("Protection    Taille    Type    Dernier acces    Dernière modification    Date de création   ");  
+        printf("Protection  Taille    Type        Dernier acces         Dernière modification         Date de création   ");  
     }
     else {
         if (PROTECTION)
-            printf("Protection   ");
+            printf("Protection  ");
         if (TAILLE)
             printf("Taille   ");
         if (TYPE)
@@ -117,6 +161,7 @@ void afficher(struct stat *s, char* nom_fichier)
         if (DATE_CREATION)
             print_date_creation(s);
 
+        printf("   %s\n", nom_fichier);
         puts("");
     }
 
