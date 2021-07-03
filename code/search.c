@@ -27,7 +27,7 @@ int main(int argc, char** argv)
     */
 
     
-    char* chemin_rep = ".";
+    char* chemin_rep = "./";
     if (argc > 2)   
         chemin_rep = prendre_chemin(argv);
 
