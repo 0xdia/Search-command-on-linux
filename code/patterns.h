@@ -43,11 +43,11 @@ int correspondre(char* p, int cur_p, char* b, int cur_b)
     }
 
     if (p[cur_p] == '\0' && b[cur_b] != '\0') {
-        // puts(" NO");
         return 0;
     }
 
     if (p[cur_p] == '*') {
+        // puts("Inside *");
         if (p[cur_p+1] == '\0')
             return 1;
 
@@ -76,26 +76,24 @@ int correspondre(char* p, int cur_p, char* b, int cur_b)
     }
     
     else if (p[cur_p] == '?') {
+        // puts("Inside ?");
         if (p[cur_p+1] == '\0')
             return b[cur_b+1] == '\0';
 
         if (b[cur_b+1] == '\0')
-            return 0;
+            return (p[cur_p+1]=='*' && p[cur_p+2]=='\0');
     }
     
     else {
         // printf("Testing 2 chars: ");
         if (p[cur_p] != b[cur_b]) {
-        //    puts("No");
             return 0;
         }
 
         if (p[cur_p+1] == b[cur_b+1] && p[cur_p+1] == '\0') {
-        //    puts("Yes");
             return 1;
         }
 
-        // puts("Yes");
     }
 
     return correspondre(p, cur_p+1, b, cur_b+1);
