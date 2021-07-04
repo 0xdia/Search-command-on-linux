@@ -63,6 +63,8 @@ void rechercher(char* chemin, int niveau, char* patrn) // name pattern must be a
             continue;
 
 
+        // printf("testing: %s ", entry->d_name);
+
         if (correspondre(patrn, 0, entry->d_name, 0)) {
             // tester si l'entete est affiché ou pas
             if (entete_deja_affiche == 0) {
@@ -79,10 +81,11 @@ void rechercher(char* chemin, int niveau, char* patrn) // name pattern must be a
             struct stat s;
             int ret = stat(nom_fichier, &s);
             if (ret) {
-                // perror("stat"); // check this later
+                //perror("stat"); // check this later
                 continue;
             }
-            else afficher(&s, entry->d_name); 
+
+            afficher(&s, entry->d_name); 
         }
 
         if (entry->d_type == 4) {
@@ -101,8 +104,8 @@ void rechercher(char* chemin, int niveau, char* patrn) // name pattern must be a
         }
     }
 
-    // if (errno && !entry)
-        // perror("readdir");
+    //if (errno && !entry)
+    //    perror("readdir");
 
     closedir(rep);
 }
