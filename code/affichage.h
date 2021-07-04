@@ -34,7 +34,7 @@ void print_protection(struct stat *s)
         bits[8] = (mode & S_IXOTH) ? 't' : 'T';
     bits[9] = '\0';
 
-    printf("%s ", bits);
+    printf("%s   ", bits);
     // printf("%3o      ", s->st_mode&0777);
 }
 
@@ -84,21 +84,21 @@ void print_taille(struct stat *s)
 {
     double taille = (double) s->st_size;
     if (taille < 1000) {
-        printf("%.1lf B ", taille);
+        printf("%.1lf B   ", taille);
         return;
     }
     taille /= 1000;
     if (taille < 1000) {
-        printf("%.1lf kB ", taille);
+        printf("%.1lf kB   ", taille);
         return;
     }
     taille /= 1000;
     if (taille < 1000) {
-        printf("%.1lf MB ", taille);
+        printf("%.1lf MB   ", taille);
         return;
     }
     taille /= 1000;
-    printf("%.1lf GB ", taille);
+    printf("%.1lf GB   ", taille);
 }
 
 void print_all(struct stat *s, char* nom_fichier)
@@ -108,13 +108,13 @@ void print_all(struct stat *s, char* nom_fichier)
     print_taille(s);
     printf(" ");
     print_type(s);
-    printf("      ");
-    print_dernier_acces(s);
-    printf("      ");
-    print_derniere_modif(s);
-    printf("      ");
-    print_date_creation(s);
     printf("   ");
+    print_dernier_acces(s);
+    printf("   ");
+    print_derniere_modif(s);
+    printf("   ");
+    print_date_creation(s);
+    printf("  ");
     printf("   %s\n", nom_fichier);
 }
 
@@ -122,7 +122,7 @@ void print_all(struct stat *s, char* nom_fichier)
 void afficher_entete()
 {
     if (ALL) {
-        printf("Protection  Taille    Type            Dernier acces             Dernière modification             Date de création       ");  
+        printf("Protection    Taille    Type            Dernier acces           Dernière modification          Date de création   ");  
     }
     else {
         if (PROTECTION)
@@ -130,7 +130,7 @@ void afficher_entete()
         if (TAILLE)
             printf("Taille   ");
         if (TYPE)
-            printf("Type   ");
+            printf("Type        ");
         if (DATE_DERNIER_ACCES)
             printf("Dernier acces   ");
         if (DATE_DERNIERE_MODIF)

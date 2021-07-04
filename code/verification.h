@@ -47,7 +47,6 @@ int entree_erronee(int t, char** arguments)
         if (
             strcmp(arguments[i], "-0") &&
             strcmp(arguments[i], "-1") &&
-            // strcmp(arguments[i], "-n") &&
             strcmp(arguments[i], "-d") &&
             strcmp(arguments[i], "-m") &&
             strcmp(arguments[i], "-s") &&
@@ -66,7 +65,11 @@ int entree_erronee(int t, char** arguments)
     if (options_niveau > 1)
         return 1;
 
-    if (arguments[1][0] == '-' || arguments[t-1][0] == '-')
+
+    // if (arguments[1][0] == '-' || arguments[t-1][0] == '-')
+    //     return 1;
+
+    if (arguments[t-1][0] == '-')
         return 1;
 
     // vérifier si le répertoire existe
