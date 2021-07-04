@@ -122,7 +122,7 @@ void print_all(struct stat *s, char* nom_fichier)
 void afficher_entete()
 {
     if (ALL) {
-        printf("Protection  Taille    Type        Dernier acces         Dernière modification         Date de création   ");  
+        printf("Protection  Taille    Type            Dernier acces             Dernière modification             Date de création       ");  
     }
     else {
         if (PROTECTION)

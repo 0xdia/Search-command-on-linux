@@ -26,20 +26,29 @@ int main(int argc, char** argv)
     }
     */
 
-    
-    char* chemin_rep = "./";
-    if (argc > 2)   
-        chemin_rep = prendre_chemin(argv);
-
-    /*
-    char *cwd;
-    cwd = getcwd(chemin_rep, 0);
-    if (!cwd) {
+    char* chemin_rep;
+    chemin_rep = getcwd(NULL, 0);
+    if (! chemin_rep) {
         perror("getcwd");
-        return 1;
+        exit(1);
     }
-    free(cwd);
-    */
+
+    if (argc > 2) {  
+        if (strcmp(argv[1], "."))
+            strcpy(chemin_rep, prendre_chemin(argv[1]));
+        else
+            strcpy(chemin_rep, prendre_chemin(chemin_rep));
+    }
+        
+    //printf("Arguments: %d\n", argc);
+    //for (int i=0; i<argc; i++)
+    //    printf("%s ", argv[i]);
+    //puts("");
+
+
+    // printf("chemin: %s\n", chemin_rep);
+
+    free(chemin_rep);
 
     rechercher(chemin_rep, niveau, argv[argc-1]);
     if (! entete_deja_affiche)

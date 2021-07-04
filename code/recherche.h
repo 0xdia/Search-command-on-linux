@@ -17,12 +17,15 @@
 
 int entete_deja_affiche = 0;
 
-char* prendre_chemin(char** arguments)
+char* prendre_chemin(char* argument)
 {
-    if (arguments[1][0] == '-')
+    if (argument[0] == '-')
         return NULL;
 
-    return arguments[1];
+    if (argument[strlen(argument)-1] != '/')
+        strcat(argument, "/");
+
+    return argument;
 }
 
 int prendre_niveau(char** arguments, int n)
@@ -71,6 +74,8 @@ void rechercher(char* chemin, int niveau, char* patrn) // name pattern must be a
             char nom_fichier[strlen(chemin) + strlen(entry->d_name)+1];
             strcpy(nom_fichier, chemin);
             strcat(nom_fichier, entry->d_name);
+
+            // printf("nom fichier: %s\n", nom_fichier);
 
             int ret = stat(nom_fichier, &s);
             if (ret) {
