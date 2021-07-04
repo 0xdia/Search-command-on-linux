@@ -136,7 +136,7 @@ void afficher_entete()
         if (DATE_DERNIERE_MODIF)
             printf("Dernier modification   ");
         if (DATE_CREATION)
-            printf("Date de création");
+            printf("Date de création  ");
     }
     printf("Nom du fichier\n");
 }

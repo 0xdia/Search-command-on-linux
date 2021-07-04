@@ -65,7 +65,6 @@ int entree_erronee(int t, char** arguments)
     if (options_niveau > 1)
         return 1;
 
-
     // if (arguments[1][0] == '-' || arguments[t-1][0] == '-')
     //     return 1;
 
@@ -73,6 +72,9 @@ int entree_erronee(int t, char** arguments)
         return 1;
 
     // vérifier si le répertoire existe
+    if (arguments[1][0] == '-')
+        return 0;
+
     if (t>2 && ! repertoire_existe(arguments[1]))
         return 1;
 

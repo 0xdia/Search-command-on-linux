@@ -42,15 +42,15 @@ int main(int argc, char** argv)
     strcat(chemin_rep, "/");
 
     if (argc > 2) {  
-        if (strcmp(argv[1], "."))
+        if (strcmp(argv[1], ".") && argv[1][0]!='-')
             strcpy(chemin_rep, prendre_chemin(argv[1]));
         else
             strcpy(chemin_rep, prendre_chemin(chemin_rep));
     } 
         
-        
-    //printf("chemin: %s\n", chemin_rep);
-    //printf("pattern: %s\n", argv[argc-1]);
+
+    // printf("chemin: %s\n", chemin_rep);
+    // printf("pattern: %s\n", argv[argc-1]);
 
     rechercher(chemin_rep, niveau, argv[argc-1]);
     if (! entete_deja_affiche)
