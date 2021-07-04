@@ -8,11 +8,6 @@
 
 int main(int argc, char** argv)
 {
-    // printf("Arguments: %d\n", argc);
-    // for (int i=0; i<argc; i++)
-    //     printf("%s ", argv[i]);
-    // puts("");
-
 
     if (verifier_entree(argc, argv) == 0)
         return 0;
@@ -23,14 +18,9 @@ int main(int argc, char** argv)
 
     int niveau = prendre_niveau(argv, argc);
 
-    nettoyer_nom(argv[argc-1]);
-
-    /*
-    if (! go(argv[argc-2], argv[argc-1])) {
-        puts("No file was found");
-        return 0;
-    }
-    */
+    char pat[60];
+    nettoyer_nom(argv[argc-1], pat);
+    // printf("[*] pattern: %s [end]\n", pat);
 
     char* chemin_rep;
     chemin_rep = getcwd(NULL, 0);
@@ -39,7 +29,7 @@ int main(int argc, char** argv)
         exit(1);
     }
     
-    strcat(chemin_rep, "/");
+    strcpy(chemin_rep, prendre_chemin(chemin_rep));
 
     if (argc > 2) {  
         if (strcmp(argv[1], ".") && argv[1][0]!='-')
@@ -48,11 +38,18 @@ int main(int argc, char** argv)
             strcpy(chemin_rep, prendre_chemin(chemin_rep));
     } 
         
+    /*
+    printf("[***] Arguments: %d\n", argc);
+    for (int i=0; i<argc; i++)
+        printf("%s ", argv[i]);
+    puts("");
+    puts("[***]");
 
-    // printf("chemin: %s\n", chemin_rep);
-    // printf("pattern: %s\n", argv[argc-1]);
+    printf("[*] pattern: %s [end]\n", pat);
+    printf("[*] chemin: %s\n", chemin_rep);
+    */
 
-    rechercher(chemin_rep, niveau, argv[argc-1]);
+    rechercher(chemin_rep, niveau, pat);
     if (! entete_deja_affiche)
         puts("Aucun fichier n'est trouvé");
 

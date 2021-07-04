@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <string.h>
 
-void nettoyer_nom(char* pattern)
+void nettoyer_nom(char* pattern, char* pat)
 {
-    if (strlen(pattern) == 1)
+    if (strlen(pattern) == 1) {
+        strcpy(pat, pattern);
         return;
+    }
 
     char propre[256];
     propre[0] = pattern[0]; 
@@ -22,7 +24,8 @@ void nettoyer_nom(char* pattern)
 
     propre[j] = '\0';
 
-    strcpy(pattern, propre);
+    strcpy(pat, propre);
+    // strcpy(pattern, propre);
 }
 
 int go(char* p, char *b)
