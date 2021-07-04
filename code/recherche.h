@@ -62,7 +62,6 @@ void rechercher(char* chemin, int niveau, char* patrn) // name pattern must be a
         if (strcmp(entry->d_name, ".")==0 || strcmp(entry->d_name, "..")==0)
             continue;
 
-        struct stat s;
 
         if (correspondre(patrn, 0, entry->d_name, 0)) {
             // tester si l'entete est affiché ou pas
@@ -76,14 +75,14 @@ void rechercher(char* chemin, int niveau, char* patrn) // name pattern must be a
             strcat(nom_fichier, entry->d_name);
 
             // printf("nom fichier: %s\n", nom_fichier);
-
+    
+            struct stat s;
             int ret = stat(nom_fichier, &s);
             if (ret) {
-                perror("stat");
+                // perror("stat"); // check this later
                 continue;
             }
-
-            afficher(&s, entry->d_name); 
+            else afficher(&s, entry->d_name); 
         }
 
         if (entry->d_type == 4) {
@@ -102,8 +101,8 @@ void rechercher(char* chemin, int niveau, char* patrn) // name pattern must be a
         }
     }
 
-    if (errno && !entry)
-        perror("readdir");
+    // if (errno && !entry)
+        // perror("readdir");
 
     closedir(rep);
 }
