@@ -3,7 +3,6 @@
 
 void afficher_aide()
 {
-    puts("Search:");
     puts("Usage:     search  [Nom du répertoire]  [-options]  \"Nom_du_fichier\"");
 
     puts("Description de la commande:");
