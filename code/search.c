@@ -8,6 +8,12 @@
 
 int main(int argc, char** argv)
 {
+    printf("Arguments: %d\n", argc);
+    for (int i=0; i<argc; i++)
+        printf("%s ", argv[i]);
+    puts("");
+
+
     if (verifier_entree(argc, argv) == 0)
         return 0;
 
@@ -40,19 +46,13 @@ int main(int argc, char** argv)
             strcpy(chemin_rep, prendre_chemin(chemin_rep));
     }
         
-    //printf("Arguments: %d\n", argc);
-    //for (int i=0; i<argc; i++)
-    //    printf("%s ", argv[i]);
-    //puts("");
+    printf("chemin: %s\n", chemin_rep);
 
-
-    // printf("chemin: %s\n", chemin_rep);
-
-    free(chemin_rep);
 
     rechercher(chemin_rep, niveau, argv[argc-1]);
     if (! entete_deja_affiche)
         puts("Aucun fichier n'est trouvé");
 
+    free(chemin_rep);  
     return 0;
 }
