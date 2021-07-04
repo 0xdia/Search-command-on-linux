@@ -25,7 +25,6 @@ void nettoyer_nom(char* pattern, char* pat)
     propre[j] = '\0';
 
     strcpy(pat, propre);
-    // strcpy(pattern, propre);
 }
 
 int go(char* p, char *b)
@@ -39,8 +38,6 @@ int go(char* p, char *b)
 
 int correspondre(char* p, int cur_p, char* b, int cur_b) 
 {
-    // printf("[***]: %s x %s\n", &p[cur_p], &b[cur_b]);
-    
     if (strcmp(&p[cur_p], &b[cur_b]) == 0) {
         return 1;
     }
@@ -50,7 +47,6 @@ int correspondre(char* p, int cur_p, char* b, int cur_b)
     }
 
     if (p[cur_p] == '*') {
-        // puts("Inside *");
         if (p[cur_p+1] == '\0')
             return 1;
 
@@ -58,15 +54,9 @@ int correspondre(char* p, int cur_p, char* b, int cur_b)
         for (int i=cur_p+1; p[i] != '\0'; i++)
             at_least_at_the_end += (p[i] != '*');
     
-        // printf(" at least at the end = %d\n", at_least_at_the_end);
 
         int chars_remaining = strlen(b) - cur_b;
         
-        //for (int i=cur_b, chars_remaining; b[i] != '\n'; i++, chars_remaining++)
-        //;
-
-        // printf(" chars remaining = %d\n", chars_remaining);
-
         if (at_least_at_the_end > chars_remaining)
             return 0;
 
@@ -79,7 +69,6 @@ int correspondre(char* p, int cur_p, char* b, int cur_b)
     }
     
     else if (p[cur_p] == '?') {
-        // puts("Inside ?");
         if (p[cur_p+1] == '\0')
             return b[cur_b+1] == '\0';
 
@@ -88,7 +77,6 @@ int correspondre(char* p, int cur_p, char* b, int cur_b)
     }
     
     else {
-        // printf("Testing 2 chars: ");
         if (p[cur_p] != b[cur_b]) {
             return 0;
         }
@@ -101,4 +89,3 @@ int correspondre(char* p, int cur_p, char* b, int cur_b)
 
     return correspondre(p, cur_p+1, b, cur_b+1);
 }
-

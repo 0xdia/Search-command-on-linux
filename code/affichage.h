@@ -35,10 +35,9 @@ void print_protection(struct stat *s)
     bits[9] = '\0';
 
     printf("%s   ", bits);
-    // printf("%3o      ", s->st_mode&0777);
 }
 
-void print_type(struct stat *s) // Search for name conventions in french in the course
+void print_type(struct stat *s) 
 {
     mode_t t = s->st_mode;
     if (S_ISREG(t))

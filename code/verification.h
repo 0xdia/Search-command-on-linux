@@ -65,9 +65,6 @@ int entree_erronee(int t, char** arguments)
     if (options_niveau > 1)
         return 1;
 
-    // if (arguments[1][0] == '-' || arguments[t-1][0] == '-')
-    //     return 1;
-
     if (arguments[t-1][0] == '-')
         return 1;
 

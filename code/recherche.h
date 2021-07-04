@@ -74,12 +74,10 @@ void rechercher(char* chemin, int niveau, char* patrn) // name pattern must be a
             strcpy(nom_fichier, chemin);
             strcat(nom_fichier, entry->d_name);
 
-            // printf("nom fichier: %s\n", nom_fichier);
-    
             struct stat s;
             int ret = stat(nom_fichier, &s);
             if (ret) {
-                perror("stat"); // check this later
+                // perror("stat");
                 continue;
             }
 
@@ -102,8 +100,8 @@ void rechercher(char* chemin, int niveau, char* patrn) // name pattern must be a
         }
     }
 
-    if (errno && !entry)
-        perror("readdir");
+    //if (errno && !entry)
+    //    perror("readdir");
 
     closedir(rep);
 }

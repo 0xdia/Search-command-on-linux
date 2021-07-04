@@ -20,7 +20,6 @@ int main(int argc, char** argv)
 
     char pat[60];
     nettoyer_nom(argv[argc-1], pat);
-    // printf("[*] pattern: %s [end]\n", pat);
 
     char* chemin_rep;
     chemin_rep = getcwd(NULL, 0);
